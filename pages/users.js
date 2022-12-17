@@ -3,17 +3,16 @@ import clientPromise from "../lib/mongodb";
 export default function Users({ users }) {
     return (
         <div>
-            <h1>The Greates Users Of All Time</h1>
+            <h1>Bedste Users Nogensinde</h1>
             <p>
-                <small>(According to Freya Wad Sackett)</small>
+                <small>(Ifølge Freya Wad Sackett)</small>
             </p>
             <ul>
-                {users.map((users) => (
-                    <li>
-                        <h2>{users._id}</h2>
-                        <h3>{users.email}</h3>
-                        <p>{users.password}</p>
-                    </li>
+                {users.map((user) => (
+                    <p>
+                        <h2>{user.email}</h2>
+                        <p>{user.password}</p>
+                    </p>
                 ))}
             </ul>
         </div>
@@ -29,13 +28,13 @@ export async function getServerSideProps() {
             .collection("users")
             .find({})
             .sort({ })
-            .limit( )
+            .limit(2)
             .toArray();
 
         return {
-            props: { users: JSON.parse(JSON.stringify(users)) },
-        };
-    } catch (e) {
+            props: { users: JSON.parse(JSON.stringify(users)) }, }; } 
+        
+            catch (e) {
         console.error(e);
     }
 }
