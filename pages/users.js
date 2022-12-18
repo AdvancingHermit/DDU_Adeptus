@@ -1,6 +1,24 @@
 import clientPromise from "../lib/mongodb";
 
+
 export default function Users({ users }) {
+    const createUser = async () => {
+        const randomNum = Math.floor(Math.random() * 1000);
+        const res = await fetch("/api/test/add", {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json",
+            }, 
+            body : JSON.stringify({
+                email : "test" + randomNum + "@test.com",
+                password : "Test" + randomNum,
+            }),
+            
+        });
+        const data = await res.json();
+        console.log(data);
+    };
+        
     return (
         <div>
             <h1>Bedste Users Nogensinde</h1>
@@ -9,12 +27,13 @@ export default function Users({ users }) {
             </p>
             <ul>
                 {users.map((user) => (
-                    <p>
+                    <li>
                         <h2>{user.email}</h2>
-                        <p>{user.password}</p>
-                    </p>
+                        <h3>{user.password}</h3>
+                    </li>
                 ))}
             </ul>
+            <button onClick={createUser}>Create User</button>
         </div>
     );
 }
@@ -22,13 +41,13 @@ export default function Users({ users }) {
 export async function getServerSideProps() {
     try {
         const client = await clientPromise;
-        const db = client.db("ddu_users");
+        const db = client.db("test");
 
         const users = await db
-            .collection("users")
+            .collection("tests")
             .find({})
             .sort({ })
-            .limit(2)
+            .limit(20)
             .toArray();
 
         return {
