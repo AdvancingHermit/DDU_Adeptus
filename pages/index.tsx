@@ -37,7 +37,7 @@ export default function Home({
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js with MongoDB!</a>
+          Welcome to <a href="./users">Nice Film</a>
         </h1>
 
         {isConnected ? (
@@ -54,9 +54,9 @@ export default function Home({
         </p>
 
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+          <a href="./opgaver" className="card">
+            <h3>Opgaver &rarr;</h3>
+            <p>Lav Opgaver Her</p>
           </a>
 
           <a href="https://nextjs.org/learn" className="card">
