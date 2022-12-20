@@ -1,5 +1,5 @@
 import clientPromise from "../lib/mongodb";
-
+import Head from 'next/head'
 
 export default function Users({ users }) {
     const createUser = async () => {
@@ -36,23 +36,17 @@ export default function Users({ users }) {
         console.log(data);
     };
 
-//Her er en knap der opretter en bruger med random email og password
-//<button onClick={createUser}>Create User</button>
         
     return (
         <div>
+            <Head>
+            <title>Login</title>
+            <meta property="og:title" content="Login" key="title" />
+            </Head>
             <h1>Bedste Users Nogensinde</h1>
             <p>
                 <small>(Ifølge Freya Wad Sackett)</small>
             </p>
-            <ul>
-                {users.map((user) => (
-                    <li>
-                        <h2>{user.email}</h2>
-                        <h3>{user.password}</h3>
-                    </li>
-                ))}
-            </ul>
             
             <p></p>
             <p></p>
@@ -83,7 +77,7 @@ export async function getServerSideProps() {
         const db = client.db("test");
 
         const users = await db
-            .collection("tests")
+            .collection("users")
             .find({})
             .sort({ })
             .limit(20)

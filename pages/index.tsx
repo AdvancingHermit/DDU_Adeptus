@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
 import { InferGetServerSidePropsType } from 'next'
+import Link from 'next/link'
 
 export async function getServerSideProps(context) {
   try {
@@ -59,17 +60,17 @@ export default function Home({
             <p>Lav Opgaver Her</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          <a href="/login" className="card">
+            <h3>Login &rarr;</h3>
+            <p>Her kan du login</p>
           </a>
 
           <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
+            href="/signup"
             className="card"
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+            <h3>Signup &rarr;</h3>
+            <p>Her kan du signup</p>
           </a>
 
           <a
