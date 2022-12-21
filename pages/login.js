@@ -2,38 +2,21 @@ import clientPromise from "../lib/mongodb";
 import Head from 'next/head'
 
 export default function Users({ users }) {
-    const createUser = async () => {
-        const randomNum = Math.floor(Math.random() * 1000);
-        const res = await fetch("/api/test/add", {
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json",
-            }, 
-            body : JSON.stringify({
-                email : "test" + randomNum + "@test.com",
-                password : "Test" + randomNum,
-            }),
-            
-        });
-        const data = await res.json();
-        console.log(data);
-    };
 
-    const createInput = async () => {
-        const emInput = document.getElementById("email").value;
-        const psInput = document.getElementById("password").value;
-        const res = await fetch("/api/test/add", {
+    const checkInput = async () => {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const res = await fetch("/api/login", {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json",
             },
             body : JSON.stringify({
-                email : emInput,
-                password : psInput,
+                email: email,
+                password: password
             }),
         });
-        const data = await res.json();
-        console.log(data);
+        alert("Logged in")
     };
 
         
@@ -62,7 +45,7 @@ export default function Users({ users }) {
                 </label>
             </form>
 
-            <button onClick={createInput}>Create User With Input</button>
+            <button onClick={checkInput}>Login</button>
             
 
 
@@ -76,15 +59,8 @@ export async function getServerSideProps() {
         const client = await clientPromise;
         const db = client.db("test");
 
-        const users = await db
-            .collection("users")
-            .find({})
-            .sort({ })
-            .limit(20)
-            .toArray();
-
         return {
-            props: { users: JSON.parse(JSON.stringify(users)) }, }; } 
+            props: { isConnected: true }, }; } 
         
             catch (e) {
         console.error(e);

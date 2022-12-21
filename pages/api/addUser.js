@@ -10,7 +10,6 @@ import User from '../../models/userModel';
 
 export default async function addUser(req, res) {
   try{
-  const { email, password } = req.body;
   console.log("Connecting to MongoDB")
   await connectMongo();
   const user = await User.create(req.body);

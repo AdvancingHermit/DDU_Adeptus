@@ -1,37 +1,49 @@
 import clientPromise from "../lib/mongodb";
 import Head from 'next/head'
-import User from "../models/userModel";
+import Link from "next/link";
 var crypto = require('crypto'); 
 
 
 export default function sign({  }) {
 
+    function setPass(pass) { 
+ 
+        const salt = crypto.randomBytes(16).toString('hex'); 
+    
+        
+        const hash = crypto.pbkdf2Sync(pass, salt,  
+        420, 64, `sha512`).toString(`hex`); 
+        return [hash, salt]
+    }; 
+
     const createUser = async () => {
 
+        const userClass = document.getElementById("class").value;
+        const firstname = document.getElementById("firstname").value;
+        const lastname = document.getElementById("lastname").value;
+        const email = document.getElementById("email").value;
 
-        let newUser = new User();
-        newUser.class = document.getElementById("class").value;
-        newUser.firstname = document.getElementById("firstname").value;
-        newUser.lastname = document.getElementById("lastname").value;
-        newUser.email = document.getElementById("email").value;
+        const isTeacher = document.getElementById("isTeacher").checked;
+        const hashsalt = setPass(document.getElementById("password").value)
+        const hash = hashsalt[0];
+        const salt = hashsalt[1];
 
-        newUser.isTeacher = document.getElementById("isTeacher").checked;
-        newUser.setPass(document.getElementById("password").value);
-
-        let userjson = newUser.find().lean().exec(function (err, users) {
-            return res.end(JSON.stringify(users));
-        });
-
-        const res = await fetch("/api/test/addUser", {
+        const res = await fetch("/api/addUser", {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json",
-            }, 
-            body : userjson,
-            
+            },
+            body : JSON.stringify({
+                class : userClass,
+                firstname : firstname,
+                lastname : lastname,
+                email : email,
+                isTeacher : isTeacher,
+                hash : hash, 
+                salt : salt, 
+            }),
         });
-        const data = await res.json();
-
+        alert("User created")
 
 
 
@@ -85,6 +97,8 @@ export default function sign({  }) {
             </form>
 
             <button onClick={createUser}>Create User With Input</button>
+            <br/>
+            <Link href="/">Tilbage</Link>
             
 
 
