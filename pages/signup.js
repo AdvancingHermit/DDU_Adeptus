@@ -1,17 +1,32 @@
 import clientPromise from "../lib/mongodb";
 import Head from 'next/head'
-//import User from "../models/userModel";
+import Link from "next/link";
 var crypto = require('crypto'); 
 
 
 export default function sign({  }) {
 
+    function setPass(pass) { 
+ 
+        const salt = crypto.randomBytes(16).toString('hex'); 
+    
+        
+        const hash = crypto.pbkdf2Sync(pass, salt,  
+        420, 64, `sha512`).toString(`hex`); 
+        return [hash, salt]
+    }; 
+
     const createUser = async () => {
 
-
-        //let newUser = new User();
         const userClass = document.getElementById("class").value;
         const firstname = document.getElementById("firstname").value;
+        const lastname = document.getElementById("lastname").value;
+        const email = document.getElementById("email").value;
+
+        const isTeacher = document.getElementById("isTeacher").checked;
+        const hashsalt = setPass(document.getElementById("password").value)
+        const hash = hashsalt[0];
+        const salt = hashsalt[1];
 
         const res = await fetch("/api/addUser", {
             method : "POST",
@@ -21,10 +36,14 @@ export default function sign({  }) {
             body : JSON.stringify({
                 class : userClass,
                 firstname : firstname,
+                lastname : lastname,
+                email : email,
+                isTeacher : isTeacher,
+                hash : hash, 
+                salt : salt, 
             }),
         });
-        const data = await res.json();
-        console.log(data);
+        alert("User created")
 
 
 
@@ -78,6 +97,8 @@ export default function sign({  }) {
             </form>
 
             <button onClick={createUser}>Create User With Input</button>
+            <br/>
+            <Link href="/">Tilbage</Link>
             
 
 

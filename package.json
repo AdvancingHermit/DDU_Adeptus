@@ -6,8 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "cookie-cutter": "^0.2.0",
+    "cookie-parser": "^1.4.6",
+    "cookies": "^0.8.0",
+    "cookies-next": "^2.1.1",
     "mongodb": "^4.8.1",
-    "mongoose": "^6.8.0",
+    "mongoose": "^6.8.1",
     "nav": "^0.0.2",
     "next": "latest",
     "react": "^18.2.0",

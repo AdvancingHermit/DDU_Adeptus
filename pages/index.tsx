@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
 import { InferGetServerSidePropsType } from 'next'
+import Link from 'next/link'
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   try {
     await clientPromise
     // `await clientPromise` will use the default database passed in the MONGODB_URI
@@ -37,11 +38,11 @@ export default function Home({
 
       <main>
         <h1 className="title">
-          Velkommen til <a href="./users">Adeptus</a>
+          Welcome to <a href="./users">Nice Film</a>
         </h1>
 
         {isConnected ? (
-          <h2 className="subtitle"> </h2>
+          <h2 className="subtitle">You are connected to MongoDB</h2>
         ) : (
           <h2 className="subtitle">
             You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
@@ -49,43 +50,51 @@ export default function Home({
           </h2>
         )}
 
+        <p className="description">
+          Get started by editing <code>pages/index.js</code>
+        </p>
+
         <div className="grid">
           <a href="./opgaver" className="card">
             <h3>Opgaver &rarr;</h3>
             <p>Lav Opgaver Her</p>
           </a>
 
-          <a href="./besvarelse" className="card">
-            <h3>Besvar &rarr;</h3>
-            <p>Besvar opgvaer her</p>
+          <a href="/login" className="card">
+            <h3>Login &rarr;</h3>
+            <p>Her kan du login</p>
           </a>
 
           <a
-            href="./login"
+            href="/signup"
             className="card"
           >
-            <h3>Login &rarr;</h3>
-            <p>(Work in Progress)</p>
+            <h3>Signup &rarr;</h3>
+            <p>Her kan du signup</p>
           </a>
 
           <a
-            href="./login"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
             className="card"
           >
-            <h3>Opret Bruger &rarr;</h3>
+            <h3>Deploy &rarr;</h3>
             <p>
-              (Work in Progress)
+              Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
         </div>
       </main>
 
       <footer>
-        <a>
-          Lavet af Christian Nkya, Oscar Stilling og Sackie-Chan{' '}
-          <img src="/pfp.svg" alt="Cool Billede" className="logo" />
+        <a
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by{' '}
+          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
 
