@@ -1,7 +1,8 @@
 import clientPromise from "../lib/mongodb";
-
+import { setCookie, getCookie } from 'cookies-next';
 
 export default function Users({ users }) {
+    console.log(getCookie('user'))
     const createUser = async () => {
         const randomNum = Math.floor(Math.random() * 1000);
         const res = await fetch("/api/test/add", {

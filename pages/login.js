@@ -1,7 +1,11 @@
 import clientPromise from "../lib/mongodb";
 import Head from 'next/head'
+import { setCookie, getCookie } from 'cookies-next';
 
 export default function Users({ users }) {
+
+
+
 
     const checkInput = async () => {
         const email = document.getElementById("email").value;
@@ -16,7 +20,12 @@ export default function Users({ users }) {
                 password: password
             }),
         });
-        alert("Logged in")
+        alert("Logged in as", res.password)
+        const data = await res.json();
+        console.log(data)
+        document.body.innerHTML += "Hej " + data.userData.firstname + "!";
+        setCookie('user', data.userData)
+        console.log(getCookie('myCookieName'))
     };
 
         
