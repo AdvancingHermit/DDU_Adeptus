@@ -2,6 +2,7 @@ import clientPromise from "../lib/mongodb";
 import Head from 'next/head'
 import { setCookie, getCookie } from 'cookies-next';
 import Link from "next/link";
+import Router from 'next/router'
 
 export default function Users({ users }) {
 
@@ -27,24 +28,21 @@ export default function Users({ users }) {
             alert("Wrong email or password, try again!")
         } else{
         console.log(data)
-        alert("Logged in as", data.userData.firstname)
         const dataString = JSON.stringify(data.userData)
         setCookie('user', dataString.toString('base64'))
         console.log(getCookie('user'))
+        Router.reload();
         }
     };
 
         
     return (
-        <div>
+        <div id ="primary">
             <Head>
             <title>Login</title>
             <meta property="og:title" content="Login" key="title" />
             </Head>
-            <h1>Bedste Users Nogensinde</h1>
-            <p>
-                <small>(Ifølge Freya Wad Sackett)</small>
-            </p>
+            <h1>Login</h1>
             
             <p></p>
             <p></p>
@@ -54,6 +52,7 @@ export default function Users({ users }) {
                 Email:
                 <input type="text" name="email" id="email"/>
                 </label>
+                <br/>
                 <label>
                     Password:
                     <input type="text" name="password" id="password"/>
@@ -61,12 +60,8 @@ export default function Users({ users }) {
             </form>
 
             <button onClick={checkInput}>Login</button>
-            <br/>
-            <Link href="/">Tilbage</Link>
 
-
-
-            </div>
+        </div>
     );
 }
 

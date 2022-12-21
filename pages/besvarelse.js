@@ -42,14 +42,14 @@ export default function Opgaver({ assignments, assSets }) {
         return classes;
     }
     function MakeAssSetThroughClass() {
-        if (loadedOnce == false) {
+
+        if (typeof window === "undefined") {
+
             assSets.map((assSet) => (
                 AssSetArr.push(assSet)
             ))
-            loadedOnce = true;
-        }
+        } else {
 
-        else if (loadedOnce == true){
             AssSetArr = [];
             const classInput = document.getElementById("class").value;
             for (let i = 0; i < assSets.length; i++) {
@@ -57,9 +57,9 @@ export default function Opgaver({ assignments, assSets }) {
                     AssSetArr.push(assSets[i]);
             }
         }
-        console.log(AssSetArr);
-        return AssSetArr;
-    }
+
+    return AssSetArr;
+}
 
     async function GetAssignments() {
         assignList = [];
@@ -125,12 +125,9 @@ export default function Opgaver({ assignments, assSets }) {
 
     return (
 
-        <div>
+        <div id="primary">
 
-            <h1>Bedste Opgaver Nogensinde</h1>
-            <p>
-                <small>(Ifølge Freya Wad Sackett)</small>
-            </p>
+            <h1>Besvar Opgavar</h1>
 
             <label for="class">Vælg en Klasse: </label>
             <select name="class" id="class">

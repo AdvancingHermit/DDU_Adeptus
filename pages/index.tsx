@@ -2,18 +2,11 @@ import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
 import { InferGetServerSidePropsType } from 'next'
 import Link from 'next/link'
+import styles from '../styles/Home.module.css';
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   try {
     await clientPromise
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
 
     return {
       props: { isConnected: true },
@@ -32,38 +25,16 @@ export default function Home({
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Adeptus</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="./users">Nice Film</a>
+          Adeptus
         </h1>
 
-        {isConnected ? (
-          <h2 className="subtitle">You are connected to MongoDB</h2>
-        ) : (
-          <h2 className="subtitle">
-            You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
-            for instructions.
-          </h2>
-        )}
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
         <div className="grid">
-          <a href="./opgaver" className="card">
-            <h3>Opgaver &rarr;</h3>
-            <p>Lav Opgaver Her</p>
-          </a>
-
-          <a href="/login" className="card">
-            <h3>Login &rarr;</h3>
-            <p>Her kan du login</p>
-          </a>
 
           <a
             href="/signup"
@@ -73,43 +44,48 @@ export default function Home({
             <p>Her kan du signup</p>
           </a>
 
+          <a href="/login" className="card">
+            <h3>Login &rarr;</h3>
+            <p>Her kan du login</p>
+          </a>
+
           <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/opgaver"
             className="card"
           >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
+            <h3>Opgaver &rarr;</h3>
+            <p>Her kan du oprette opgaver</p>
+          </a>
+
+          <a
+            href="/besvarelse"
+            className="card"
+          >
+            <h3>Besvarelse &rarr;</h3>
+            <p>Her kan du besvare opgaver</p>
+          </a>
+
+          <a
+            href="/feedback"
+            className="card"
+          >
+            <h3>Feedback &rarr;</h3>
+            <p>Her kan du se feedback fra dine elevers besvarelser</p>
           </a>
         </div>
       </main>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
+  
 
       <style jsx>{`
         .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: top;
           align-items: center;
         }
 
         main {
-          padding: 5rem 0;
           flex: 1;
           display: flex;
           flex-direction: column;
@@ -201,6 +177,7 @@ export default function Home({
           border: 1px solid #eaeaea;
           border-radius: 10px;
           transition: color 0.15s ease, border-color 0.15s ease;
+          background-color: rgb(101, 254, 164);
         }
 
         .card:hover,

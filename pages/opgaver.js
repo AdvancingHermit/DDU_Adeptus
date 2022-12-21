@@ -54,10 +54,8 @@ export default function Assignments() {
 
     return (
         <>
-            <h1>Lav opgaver her</h1>
-            <h2>
-                <Link href="/">Gå tilbage til hovedmenu</Link>
-            </h2>
+        <div id="primary">
+            <h1>Opret opgavesæt</h1>
 
             <form>
                 <label>
@@ -87,9 +85,9 @@ export default function Assignments() {
                 </label>
             </form>
             <br/>
-            <button onClick={createInput}>Create Assignment With Input</button>
+            <button onClick={createInput}>Opret opgave</button>
 
-
+            </div>
         </>
     );
 }

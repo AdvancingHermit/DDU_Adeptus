@@ -1,5 +1,7 @@
 import { setCookie, getCookie } from 'cookies-next';
 import React from "react";
+import Image from 'next/image'
+import Link from 'next/link';
 
 
 export default function Navbar({ }) {
@@ -26,7 +28,20 @@ export default function Navbar({ }) {
     }
     return (
         <>
-        {userStatus()}
+            <header style={{maxHeight: 1639 / 6 }} id="header">
+
+                <a href="/">
+                    <Image
+                        src="/logo.png"
+                        alt="Adeptus logo"
+                        width={1639 / 6}
+                        height={679 / 6}
+                    />
+                </a>
+                <div id="userStatus">
+                    {userStatus()}
+                </div>
+            </header>
         </>
     );
   }

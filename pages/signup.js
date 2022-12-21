@@ -51,15 +51,12 @@ export default function sign({  }) {
 
     }
     return (
-        <div>
+        <div id="primary">
         <Head>
             <title>Signup</title>
             <meta property="og:title" content="Sign Up" key="title" />
         </Head>
-            <h1>Bedste Signup-side Nogensinde</h1>
-            <p>
-                <small>(Ifølge Freya Wad Sackett)</small>
-            </p>
+            <h1>Sign Up</h1>
             
             <p></p>
             <p></p>
@@ -97,9 +94,6 @@ export default function sign({  }) {
             </form>
 
             <button onClick={createUser}>Create User With Input</button>
-            <br/>
-            <Link href="/">Tilbage</Link>
-            
 
 
 
