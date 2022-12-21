@@ -1,7 +1,9 @@
 import Link from 'next/link';
 
+
 export default function Assignments() {
     let currentAssID = "";
+
 
 
     const createInput = async () => {
@@ -18,6 +20,7 @@ export default function Assignments() {
                 assSetID: currentAssID,
             }),
         });
+
         const data = await res.json();
         console.log(data);
     };
@@ -25,6 +28,9 @@ export default function Assignments() {
     const createAssSet = async () => {
         const assSetName = document.getElementById("assName").value;
         const assSetClass = document.getElementById("assClass").value;
+        console.log(assSetName);
+        console.log(assSetClass);
+
         const res = await fetch("/api/addAssSet", {
             method: "POST",
             headers: {
@@ -35,11 +41,16 @@ export default function Assignments() {
                 assClass: assSetClass,
             }),
         });
+
+        console.log("I Made it");
         const data = await res.json();
+        console.log("I Made it a bit longer");
         currentAssID = data.assSet._id;
+        console.log("I Made it way Longer");
         console.log(data);
         console.log(currentAssID);
     };
+
 
     return (
         <>
