@@ -93,11 +93,11 @@ export default function Opgaver({ assignments, assSets }) {
         }
     }
 
-    function endOfSet(){
+    function endOfSet() {
         console.log(opgPercArr);
         console.log(opgPerc);
         const perc = (opgPerc / opgPercArr.length) * 100;
-        const stringPerc  = perc.toString().substring(0,5);
+        const stringPerc = perc.toString().substring(0, 5);
         console.log(stringPerc);
         alert("Du fik " + stringPerc + "% rigtige svar!");
     }
@@ -115,14 +115,14 @@ export default function Opgaver({ assignments, assSets }) {
                 <small>(Ifølge Freya Wad Sackett)</small>
             </p>
 
-            <label for="class">Choose a class:</label>
+            <label for="class">Vælg en Klasse: </label>
             <select name="class" id="class">
                 {MakeClasses().map((className) => (
                     <option value={className}>{className}</option>
                 ))}
             </select>
             <br></br>
-            <label for="assName">Choose an assignment:</label>
+            <label for="assName">Vælg et Opgavesæt: </label>
             <select name="assName" id="assName">
                 {MakeAssSetThroughClass().map((assSet) => (
                     <option value={assSet.name}>{assSet.name}</option>
@@ -150,7 +150,9 @@ export default function Opgaver({ assignments, assSets }) {
                                             <input type="text" name="answer" id={assignment._id} />
                                         </label>
                                     </form>
-                                    <button onClick={() => CheckAnswer(assignment._id)} > Check Answer</button>
+                                    <div id="test1">
+                                        <button onClick={() => CheckAnswer(assignment._id)} class="chkBtn" > Check Svar</button>
+                                    </div>
                                 </div>
                             </>
 
@@ -172,6 +174,11 @@ export default function Opgaver({ assignments, assSets }) {
             #ass > div {
                 margin-bottom: 100px;
                 margin-left: 10px;
+            }
+            #test1 {
+                margin-left: 0% !important;
+                padding-left: 0% !important;
+
             }
             `
             }
