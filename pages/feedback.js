@@ -65,7 +65,6 @@ export default function Opgaver({ feedbacks, assSets, assignments }) {
         console.log(assignList)
         console.log(toggle);
         setToggle(prevState => !prevState)
-        console.log("her er " + opgList);
         makeNiceStringList();
     }
 
