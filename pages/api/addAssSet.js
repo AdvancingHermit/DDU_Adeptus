@@ -1,5 +1,5 @@
 import connectMongo from '../../utils/connectMongo';
-import Test from '../../models/assignmentModel';
+import AssSet from '../../models/assSetModel';
 
 /**
  * @param {import('next').NextApiRequest} req 
@@ -7,16 +7,16 @@ import Test from '../../models/assignmentModel';
  */
 
 
-export default async function addTest(req, res) {
+export default async function addAssSet(req, res) {
   try{
-  const { assignmentText, possibleAnswers, correctAnswer } = req.body;
+  const { name, assClass } = req.body;
   console.log("Connecting to MongoDB")
   await connectMongo();
-  const test = await Test.create(req.body);
+  const assSet = await AssSet.create(req.body);
 
-  res.json({ test });
+  res.json({ assSet });
 
-  console.log("Added Assignment")
+  console.log("Added Assignment Set")
   } catch (err) { 
     console.error(err); 
     res.json({ err });

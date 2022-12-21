@@ -9,7 +9,7 @@ import Single from '../../models/singleModel';
 
 export default async function addSingle(req, res) {
   try{
-  const { assignmentText, correctAnswer } = req.body;
+  const { assignmentText, correctAnswer, assSetID } = req.body;
   console.log("Connecting to MongoDB")
   await connectMongo();
   const single = await Single.create(req.body);
