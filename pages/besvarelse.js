@@ -7,6 +7,8 @@ let AssSetArr = [];
 let loadedOnce = false;
 let opgPerc = 0.00;
 let opgPercArr = [];
+let opgFeedback = [];
+
 
 export default function Opgaver({ assignments, assSets }) {
 
@@ -47,7 +49,7 @@ export default function Opgaver({ assignments, assSets }) {
             loadedOnce = true;
         }
 
-        else {
+        else if (loadedOnce == true){
             AssSetArr = [];
             const classInput = document.getElementById("class").value;
             for (let i = 0; i < assSets.length; i++) {
@@ -77,6 +79,7 @@ export default function Opgaver({ assignments, assSets }) {
         tingtingværdi = 1;
         opgPerc = 0.00;
         opgPercArr = [];
+        opgFeedback = [];
     }
 
     function opgaveReview(bool, butID) {
@@ -84,22 +87,36 @@ export default function Opgaver({ assignments, assSets }) {
             opgPercArr.push(butID);
             if (bool == true) {
                 opgPerc++;
+                opgFeedback.push(1);
                 console.log(opgPerc);
                 console.log(opgPercArr);
             } else if (bool == false) {
+                opgFeedback.push(0);
                 console.log(opgPerc);
                 console.log(opgPercArr);
             }
         }
     }
 
-    function endOfSet() {
+    async function endOfSet() {
         console.log(opgPercArr);
         console.log(opgPerc);
         const perc = (opgPerc / opgPercArr.length) * 100;
         const stringPerc = perc.toString().substring(0, 5);
         console.log(stringPerc);
         alert("Du fik " + stringPerc + "% rigtige svar!");
+        const res = await fetch("/api/addFeedback", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                listOfCorr: opgFeedback.toString(),
+                assSetID: assSets.find(a => a.name == document.getElementById("assName").value)._id,
+            }),
+        });
+        const data = await res.json();
+        console.log(data);
     }
 
 
