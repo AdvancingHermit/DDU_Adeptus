@@ -1,12 +1,16 @@
 import Link from 'next/link';
 import clientPromise from "../lib/mongodb";
-import React, {useState} from "react";
+import React, { useState } from "react";
 let assignList = [];
 let tingtingværdi = 0;
+let AssSetArr = [];
+let loadedOnce = false;
+let opgPerc = 0.00;
+let opgPercArr = [];
 
 export default function Opgaver({ assignments, assSets }) {
 
-    
+
     const [toggle, setToggle] = useState(false);
 
     function CheckAnswer(bId) {
@@ -19,10 +23,13 @@ export default function Opgaver({ assignments, assSets }) {
         console.log(ansInput);
         if (ansInput == asAns) {
             alert("Rigtigt svar!");
+            opgaveReview(true, bId);
         } else {
             alert("Forkert svar!");
+            opgaveReview(false, bId);
         }
     }
+
     function MakeClasses() {
         let classes = [];
         for (let i = 0; i < assSets.length; i++) {
@@ -32,11 +39,28 @@ export default function Opgaver({ assignments, assSets }) {
         console.log(classes);
         return classes;
     }
+    function MakeAssSetThroughClass() {
+        if (loadedOnce == false) {
+            assSets.map((assSet) => (
+                AssSetArr.push(assSet)
+            ))
+            loadedOnce = true;
+        }
+
+        else {
+            AssSetArr = [];
+            const classInput = document.getElementById("class").value;
+            for (let i = 0; i < assSets.length; i++) {
+                if (assSets[i].assClass == classInput)
+                    AssSetArr.push(assSets[i]);
+            }
+        }
+        console.log(AssSetArr);
+        return AssSetArr;
+    }
+
     async function GetAssignments() {
         assignList = [];
-        if (toggle == true && tingtingværdi == 1) {
-            setToggle(prevState => !prevState)
-        }
 
         const assSet_id = assSets.find(a => a.name == document.getElementById("assName").value)._id;
         console.log(assSet_id);
@@ -51,10 +75,31 @@ export default function Opgaver({ assignments, assSets }) {
         console.log(toggle);
         setToggle(prevState => !prevState)
         tingtingværdi = 1;
+        opgPerc = 0.00;
+        opgPercArr = [];
     }
 
-    function printlist(){
-        console.log(assignList);
+    function opgaveReview(bool, butID) {
+        if (opgPercArr.includes(butID) == false) {
+            opgPercArr.push(butID);
+            if (bool == true) {
+                opgPerc++;
+                console.log(opgPerc);
+                console.log(opgPercArr);
+            } else if (bool == false) {
+                console.log(opgPerc);
+                console.log(opgPercArr);
+            }
+        }
+    }
+
+    function endOfSet(){
+        console.log(opgPercArr);
+        console.log(opgPerc);
+        const perc = (opgPerc / opgPercArr.length) * 100;
+        const stringPerc  = perc.toString().substring(0,5);
+        console.log(stringPerc);
+        alert("Du fik " + stringPerc + "% rigtige svar!");
     }
 
 
@@ -79,20 +124,25 @@ export default function Opgaver({ assignments, assSets }) {
             <br></br>
             <label for="assName">Choose an assignment:</label>
             <select name="assName" id="assName">
-                {assSets.map((assSet) => (
+                {MakeAssSetThroughClass().map((assSet) => (
                     <option value={assSet.name}>{assSet.name}</option>
                 ))}
-            </select>   
+            </select>
 
-            <div id="ass">
+            <div >
 
 
                 <div>
-                    <button onClick={GetAssignments}>Get Assignments</button>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                    <button onClick={GetAssignments}>Få Opgavesæt</button>
                     {toggle ? (
                         assignList.map((assignment) => (
                             <>
-                                <div>
+                                <div id="ass">
                                     <h2>{assignment.assignmentText}</h2>
                                     <form>
                                         <label>
@@ -103,9 +153,13 @@ export default function Opgaver({ assignments, assSets }) {
                                     <button onClick={() => CheckAnswer(assignment._id)} > Check Answer</button>
                                 </div>
                             </>
+
                         ))
+
                     ) : null}
                 </div>
+
+                <button onClick={endOfSet}>Færdiggør Opgave Sæt</button>
 
 
             </div>

@@ -1,4 +1,5 @@
 import connectMongo from '../../utils/connectMongo';
+require('../../models/singleModel.js');
 import Single from '../../models/singleModel';
 
 /**
@@ -19,6 +20,7 @@ export default async function addSingle(req, res) {
   console.log("Added Single")
   } catch (err) { 
     console.error(err); 
+    console.log(res.json);
     res.json({ err });
   }
 }

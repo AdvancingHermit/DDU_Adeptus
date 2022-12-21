@@ -1,4 +1,5 @@
 import connectMongo from '../../utils/connectMongo';
+require('../../models/assSetModel.js')
 import AssSet from '../../models/assSetModel';
 
 /**
@@ -19,6 +20,7 @@ export default async function addAssSet(req, res) {
   console.log("Added Assignment Set")
   } catch (err) { 
     console.error(err); 
+    console.log(res.json);
     res.json({ err });
   }
 }
