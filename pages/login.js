@@ -1,6 +1,7 @@
 import clientPromise from "../lib/mongodb";
 import Head from 'next/head'
 import { setCookie, getCookie } from 'cookies-next';
+import Link from "next/link";
 
 export default function Users({ users }) {
 
@@ -20,12 +21,17 @@ export default function Users({ users }) {
                 password: password
             }),
         });
-        alert("Logged in as", res.password)
+
         const data = await res.json();
+        if (data.userData == undefined) {
+            alert("Wrong email or password, try again!")
+        } else{
         console.log(data)
-        document.body.innerHTML += "Hej " + data.userData.firstname + "!";
-        setCookie('user', data.userData)
-        console.log(getCookie('myCookieName'))
+        alert("Logged in as", data.userData.firstname)
+        const dataString = JSON.stringify(data.userData)
+        setCookie('user', dataString.toString('base64'))
+        console.log(getCookie('user'))
+        }
     };
 
         
@@ -55,7 +61,8 @@ export default function Users({ users }) {
             </form>
 
             <button onClick={checkInput}>Login</button>
-            
+            <br/>
+            <Link href="/">Tilbage</Link>
 
 
 

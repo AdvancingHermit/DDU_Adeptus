@@ -34,6 +34,10 @@ export default async function handler(req,res){
 
 
     const tmpuser = await User.findOne({email})
+    if(!tmpuser){
+        console.log("fail bozo")
+        return res.json({status:'Not able to find the user'})
+    }
     const hash = crypto.pbkdf2Sync(password, tmpuser.salt, 420, 64, `sha512`).toString(`hex`);
 
     const user = await User.findOne({email, hash})
@@ -52,7 +56,6 @@ export default async function handler(req,res){
         }
         console.log(userData)
         console.log("Succes")
-        setCookie('myCookieName', 'some-value')
         res.json({ userData });
     }
 }
